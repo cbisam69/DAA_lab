@@ -1,4 +1,5 @@
-class Merge{
+import java.util.*;
+class Main{
  static void merge(int a[], int beg, int mid, int end)    
 {    
     int i, j, k;  
@@ -65,11 +66,18 @@ class Merge{
     System.out.println(a[l]);  
     System.out.println("\n");  
 }  
-  
+
 public static void main(String[]args)  
-{  
-    int a[] = { 12, 31, 25, 8, 32, 17, 40, 42 };  
-    int n = 8;  
+{   Scanner sc= new Scanner(System.in);
+    System.out.println("Enter the number of element");
+    int n= sc.nextInt();
+    int a[];
+    a= new int[n];
+    int m;  
+    for (m = 0; m < n; m++)  
+    {
+        a[m]=sc.nextInt();
+    }
     System.out.println("Before sorting array elements are -");  
     printArray(a, n);  
     mergeSort(a, 0, n - 1);  
