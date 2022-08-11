@@ -1,5 +1,5 @@
 import java.util.*;
-
+import java.util.Random;
 
 class quicksorts{
     static void swap(int arr[],int i,int j)
