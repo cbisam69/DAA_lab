@@ -1,8 +1,8 @@
 import java.util.*;
-public class greedy_knapsack {
+public class Main {
     Scanner in =new Scanner(System.in);
     float profit[],weight[],c,x[],ratio[];
-    flaot tc =0;
+    float tc =0;
     int n;
     
     
@@ -76,7 +76,7 @@ public class greedy_knapsack {
     }
     public static void main(String[] args)  
     {
-        Main greedy_knapsack =new greedy_knapsack();
+        Main obj =new Main();
         obj.input();
         obj.knapsack_func();
         obj.display();
