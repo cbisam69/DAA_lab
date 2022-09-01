@@ -1,44 +1,51 @@
 import java.util.*;
-class knapsack {
-
-	static int max(int a, int b)
-	{
-	return (a > b) ? a : b;
-	}
-	static int knapSack(int W, int wt[], int val[], int n)
-	{
-		
-		if (n == 0 || W == 0)
-			return 0;
-		if (wt[n - 1] > W)
-			return knapSack(W, wt, val, n - 1);
-		else
-			return max(val[n - 1]+ knapSack(W - wt[n - 1], wt,val, n - 1),knapSack(W, wt, val, n - 1));
-	}
-
-	
-	public static void main(String args[])
-	{
-		int val[],wt[];
-		Scanner sc =new Scanner(System.in);
-		System.out.println("enter the number of objects");
-		int n= sc.nextInt();
-		System.out.println("enter the total capacity of sack");
-		int W=sc.nextInt();
-		System.out.println("enter the values or profit");
-		val=new int[n];
-		for(int i=0;i<n;i++)
+public class Main
+{
+	public static void main(String[]args)
+	{  Scanner sc= new Scanner(System.in);
+		int n,W;
+		System.out.println("enter the number of items");
+		n=sc.nextInt();
+		System.out.println("enter the capacity of sack");
+		W=sc.nextInt();
+		int w[]=new int[n+1];
+		int V[]=new int[n+1];
+		for(int i=1;i<n+1;i++)
 		{
-		    val[i]=sc.nextInt();
+            w[i]=sc.nextInt();
 		}
-		System.out.println("enter the weights of each objects");
-		wt=new int[n];
-		for(int j=0;j<n;j++)
+		for(int i=1;i<n+1;i++)
 		{
-		    wt[j]=sc.nextInt();
+            V[i]=sc.nextInt();
 		}
-		System.out.println("hence profit associate is");
-		System.out.println(knapSack(W, wt, val, n));
+		int v[][]= new int[n+1][W+1];
+		for(int j=0;j<=W;j++)
+		{   v[0][j]=0;
+
+		}
+			for(int i=0;i<=n;i++)
+			{
+              v[i][0]=0;
+			}
+		for(int i=1;i<=n;i++)
+		{
+		for(int j=1;j<=W;j++)
+		{
+			if(j>=w[i])
+			{
+				v[i][j]=Math.max(v[i-1][j],V[i]+v[i-1][j-w[i]]);
+			}
+			else
+			{
+				v[i][j]=v[i-1][j];
+			}
+		}
+		}
+		int x=v[n][W];
+		System.out.println(x);
+
+
+
 	}
+
 }
-
