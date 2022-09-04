@@ -1,87 +1,80 @@
+import java.util.ArrayList;
 import java.util.Scanner;
-
-class tsp
+class Main
 {
-	public static void main(String args[])
-	{
-		Scanner scan = new Scanner(System.in);
-		System.out.println("Enter the number of cities");
-		int n = scan.nextInt();
-		int cost[][] = new int[n + 1][n + 1];
-		int s[] = new int[n + 1];
-		System.out.println("Enter the cost adjacency matrix");
-		for(int i = 1; i <= n; i++)
-		{
-			for(int j = 1; j <= n; j++)
-				cost[i][j] = scan.nextInt();
-			s[i] = 1;
-		}
-		int a = g(1, n - 1, cost, s, n);
-		System.out.println("The minimum cost is optimal tour is "+a);
-		int b = approx(cost, n);
-		int approx_val = ((b * 100) / a) - 100;
-		System.out.println("The approximation tour is "+approx_val);
-	}
-	
-	static int g(int i, int s, int cost[][], int set[], int n)
-	{
-		int newset[] = new int[n + 1];
-		int selected[] = new int[n + 1];
-		for(int j = 1; j <= n; j++)
-			newset[j] = set[j];
-		newset[i] = 0;
-		if(s == 0)
-			return cost[i][1];
-		for(int k = 0, j = 2; k < s; j++)
-		{
-			if(newset[j] != 0) //CHECK THIS
-			{
-				selected[k] = cost[i][j] + g(j,s-1,cost,newset,n);
-				k++;
-			}
-		}
-		int min = 999;
-		for(int j = 0; j < s; j++)
-		{
-			if(selected[j]<min)
-			{
-				min=selected[j];
-			}
-		}
-		return min;
-	}
-	
-	static int approx(int cost[][], int n)
-	{
-		int visited[] = new int[n + 1];
-		for(int i = 1; i <= n; i++)
-		{
-			visited[i]=0;
-		}
-		visited[1] = 1;
-		int dist = 0;
-		int next = 0;
-		for(int i = 1; i < n; i++)
-		{
-			int min = 999;
-			for(int j = 1; j <= n; j++)
-			{
-				if((cost[i][j] != 0) && (cost[i][j] < min) && (visited[j] == 0))
-				{
-					next=j;
-					min=cost[i][j];
-				}
-			}
-			dist=dist+min;
-			visited[next]=1;
-		}
-		dist = dist + cost[next][1];
-		System.out.println("Minimum cost using approximation algorithm is "+dist);
-		return dist;
-	}
-	
+    static int[][]graph;
+    static int n,src;
+    public static void main(String[]args)
+    {
+        Scanner sc=new Scanner(System.in);
+        System.out.println("enter the number of cities");
+        n=sc.nextInt();
+        graph=new int[n][n];
+        System.out.println("enter the adjacency matrix");
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+              graph[i][j]=sc.nextInt();
+              
+            }
+        } 
+        System.out.println("enter the source city");
+        src=sc.nextInt();
+        ArrayList<Integer> set=new ArrayList<Integer>();
+        for(int i=0;i<n;i++)
+        {
+            if(i==(src-1))
+            {
+                continue;
+            }
+            set.add(i);
+        }
+        int[]path=new int[n+1];//n vertex have n+1 path
+        int cost=tsp(src-1,set,path);
+        System.out.println("total cost "+cost);
+        path[0]=src-1;
+        path[n]=src-1;
+        System.out.println("path is ");
+        for(int i=n;i>=0;i--)
+        {
+            System.out.println((path[i]+1)+" ");
+        }
+        System.out.println();
+    }
+
+
+static int tsp( int v,ArrayList<Integer> set,int path[])
+{
+    if(set.isEmpty())
+    {
+        return graph[v][src-1];
+    }
+    int size=set.size();//set size
+    ArrayList<Integer> subset;
+    int mincost=Integer.MAX_VALUE;
+    
+    for(Integer i:set)
+    {
+        subset=new ArrayList<Integer>(set);
+        subset.remove(i);
+        int tempath[]=new int[n+1];
+        int cost=graph[v][i]+tsp(i,subset,tempath);
+        if(cost<mincost)
+        {
+            mincost=cost;
+            tempath[size]=i;
+            copyCentralArray(path,tempath,size);
+        }
+    }
+    return mincost;
 }
 
-
-
-
+   static void copyCentralArray(int[]dest,int[]src,int size)
+    {
+      for(int i=1;i<=size;i++)
+      {
+        dest[i]=src[i];
+      }
+    }
+}
