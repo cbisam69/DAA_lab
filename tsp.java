@@ -64,17 +64,17 @@ static int tsp( int v,ArrayList<Integer> set,int path[])
         {
             mincost=cost;
             tempath[size]=i;
-            copyCentralArray(path,tempath,size);
+            co(path,tempath,size);
         }
     }
     return mincost;
 }
 
-   static void copyCentralArray(int[]dest,int[]src,int size)
+   static void co(int[]d,int[]s,int size)
     {
       for(int i=1;i<=size;i++)
       {
-        dest[i]=src[i];
+        d[i]=s[i];
       }
     }
 }
