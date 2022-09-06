@@ -1,5 +1,5 @@
 import java.util.*;
-public class Main {
+public class gr_knapsack {
     Scanner in =new Scanner(System.in);
     float profit[],weight[],c,x[],ratio[];
     float tc =0;
@@ -68,15 +68,15 @@ public class Main {
     void display()
     {
         for(int i=0;i<n;i++)
-        {   
-            System.out.println("Include "+weight[i]*x[i]+" gram "+"of object number "+(i+1));
+        {   if(x[i]!=0)
+            System.out.println("Include : "+(i+1));
         }
         System.out.println("Total profit is  : "+tc);
            
     }
     public static void main(String[] args)  
     {
-        Main obj =new Main();
+        gr_knapsack obj =new gr_knapsack();
         obj.input();
         obj.knapsack_func();
         obj.display();
